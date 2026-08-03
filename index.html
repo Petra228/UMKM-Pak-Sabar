@@ -4,1256 +4,772 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <!-- Title & meta diisi otomatis dari config.js -->
-  <title></title>
-  <meta name="description" content="" />
+  <title>Keripik Pak Sabar — Keripik Pisang Asli Juwangi</title>
+  <meta name="description" content="Keripik pisang asli Juwangi, halal, harga terjangkau." />
 
+  <!-- Tailwind CSS CDN -->
+  <script src="https://cdn.tailwindcss.com"></script>
+  <script>
+    tailwind.config = {
+      theme: {
+        extend: {
+          fontFamily: {
+            sans: ['Inter', 'sans-serif'],
+            display: ['Playfair Display', 'serif'],
+          },
+          colors: {
+            blue: {
+              50: '#fffbeb',
+              100: '#fef3c7',
+              400: '#fbbf24',
+              500: '#f59e0b',
+              600: '#d97706',
+              700: '#b45309',
+              900: '#78350f',
+            },
+            amber: {
+              50: '#fffbeb',
+              100: '#fef3c7',
+              400: '#fbbf24',
+              500: '#f59e0b',
+              600: '#d97706',
+              700: '#b45309',
+              900: '#78350f',
+            },
+            slate: {
+              50: '#fffdf5',
+              100: '#fef3c7',
+              200: '#fde68a',
+              300: '#fcd34d',
+              400: '#94a3b8',
+              500: '#64748b',
+              700: '#334155',
+              800: '#1e293b',
+              900: '#1c1917',
+            }
+          },
+          backdropBlur: {
+            xs: '2px',
+          },
+          animation: {
+            'float': 'float 6s ease-in-out infinite',
+            'float-delay': 'float 6s ease-in-out 2s infinite',
+            'pulse-slow': 'pulse 3s ease-in-out infinite',
+          },
+          keyframes: {
+            float: {
+              '0%, 100%': { transform: 'translateY(0px)' },
+              '50%': { transform: 'translateY(-12px)' },
+            }
+          }
+        }
+      }
+    }
+  </script>
+
+  <!-- Google Fonts -->
   <link rel="preconnect" href="https://fonts.googleapis.com" />
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
   <link
-    href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@700;800&family=Plus+Jakarta+Sans:wght@400;500;600;700&display=swap"
+    href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800;900&family=Playfair+Display:wght@700;800;900&display=swap"
     rel="stylesheet" />
 
-  <!-- CONFIG DILOAD DULU — jangan ubah urutan ini -->
-  <script src="config.js"></script>
+
 
   <style>
-    :root {
-      /* Diisi dari config.js via JS */
-      --primary: #f59e0b;
-      --primary-dark: #d97706;
-      --primary-light: #fef3c7;
-      --accent: #78350f;
-      --accent-soft: #92400e;
-      --bg: #fffbf0;
-      --surface: #ffffff;
-      --text: #1c1917;
-      --text-muted: #78716c;
-      --border: #e7e5e4;
-      --shadow-sm: 0 2px 8px rgba(0, 0, 0, .06);
-      --shadow-md: 0 8px 32px rgba(0, 0, 0, .10);
-      --shadow-lg: 0 24px 64px rgba(0, 0, 0, .14);
-      --radius: 16px;
-      --radius-sm: 10px;
-      --radius-full: 9999px;
-      --transition: .3s cubic-bezier(.4, 0, .2, 1);
-    }
-
-    *,
-    *::before,
-    *::after {
-      box-sizing: border-box;
-      margin: 0;
-      padding: 0;
-    }
-
     html {
       scroll-behavior: smooth;
+      scroll-padding-top: 100px;
+    }
+
+    * {
+      box-sizing: border-box;
     }
 
     body {
-      font-family: 'Plus Jakarta Sans', sans-serif;
-      background: var(--bg);
-      color: var(--text);
-      line-height: 1.6;
-      overflow-x: hidden;
+      font-family: 'Inter', sans-serif;
     }
 
-    img {
-      max-width: 100%;
-      display: block;
+    @keyframes sectionPulse {
+      0% { transform: scale(1); }
+      50% { transform: scale(1.012); }
+      100% { transform: scale(1); }
     }
 
-    a {
-      text-decoration: none;
-      color: inherit;
+    .section-animate-pulse {
+      animation: sectionPulse 0.5s cubic-bezier(0.34, 1.56, 0.64, 1);
     }
 
-    .container {
-      max-width: 1100px;
-      margin: 0 auto;
-      padding: 0 24px;
+    /* Glassmorphism */
+    .glass {
+      background: rgba(255, 255, 255, 0.75);
+      backdrop-filter: blur(20px);
+      -webkit-backdrop-filter: blur(20px);
+      border: 1px solid rgba(255, 255, 255, 0.9);
     }
 
-    .section {
-      padding: 80px 0;
+    .glass-dark {
+      background: rgba(120, 53, 15, 0.85);
+      backdrop-filter: blur(20px);
+      -webkit-backdrop-filter: blur(20px);
+      border: 1px solid rgba(255, 255, 255, 0.15);
     }
 
-    .section-label {
-      display: inline-block;
-      font-size: .78rem;
-      font-weight: 700;
-      letter-spacing: .12em;
-      text-transform: uppercase;
-      color: var(--primary-dark);
-      background: var(--primary-light);
-      padding: 6px 16px;
-      border-radius: var(--radius-full);
-      margin-bottom: 14px;
-    }
-
-    .section-title {
-      font-family: 'Playfair Display', serif;
-      font-size: clamp(1.8rem, 4vw, 2.8rem);
-      font-weight: 800;
-      color: var(--accent);
-      line-height: 1.2;
-      margin-bottom: 16px;
-    }
-
-    .section-desc {
-      color: var(--text-muted);
-      font-size: 1.05rem;
-      max-width: 520px;
-    }
-
-    .btn {
-      display: inline-flex;
-      align-items: center;
-      gap: 10px;
-      padding: 14px 28px;
-      border-radius: var(--radius-full);
-      font-weight: 700;
-      font-size: .95rem;
-      cursor: pointer;
-      transition: var(--transition);
-      border: none;
-      text-decoration: none;
-    }
-
-    .btn-primary {
-      background: linear-gradient(135deg, var(--primary), var(--primary-dark));
-      color: #fff;
-      box-shadow: 0 4px 20px rgba(245, 158, 11, .35);
-    }
-
-    .btn-primary:hover {
-      transform: translateY(-2px);
-      box-shadow: 0 8px 32px rgba(245, 158, 11, .45);
-    }
-
-    .btn-outline {
-      background: transparent;
-      color: var(--accent);
-      border: 2px solid var(--accent);
-    }
-
-    .btn-outline:hover {
-      background: var(--accent);
-      color: #fff;
-      transform: translateY(-2px);
-    }
-
-    .btn-wa {
-      background: linear-gradient(135deg, #25d366, #128c7e);
-      color: #fff;
-      box-shadow: 0 4px 20px rgba(37, 211, 102, .3);
-    }
-
-    .btn-wa:hover {
-      transform: translateY(-2px);
-      box-shadow: 0 8px 32px rgba(37, 211, 102, .45);
-    }
-
-    /* NAVBAR */
-    .navbar {
-      position: fixed;
-      top: 0;
-      left: 0;
-      right: 0;
-      z-index: 100;
-      padding: 16px 0;
-      transition: var(--transition);
-    }
-
-    .navbar.scrolled {
-      background: rgba(255, 251, 240, .92);
+    .glass-blue {
+      background: rgba(245, 158, 11, 0.12);
       backdrop-filter: blur(16px);
-      box-shadow: var(--shadow-sm);
-      padding: 10px 0;
+      -webkit-backdrop-filter: blur(16px);
+      border: 1px solid rgba(245, 158, 11, 0.25);
     }
 
-    .navbar .container {
-      display: flex;
-      align-items: center;
-      justify-content: space-between;
-    }
-
-    .nav-brand {
-      display: flex;
-      align-items: center;
-      gap: 10px;
-    }
-
-    .nav-logo {
-      width: 40px;
-      height: 40px;
-      background: linear-gradient(135deg, var(--primary), var(--primary-dark));
-      border-radius: 10px;
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      font-size: 1.3rem;
-    }
-
-    .nav-name {
-      font-family: 'Playfair Display', serif;
-      font-weight: 700;
-      font-size: 1.15rem;
-      color: var(--accent);
-    }
-
-    .nav-links {
-      display: flex;
-      gap: 32px;
-      list-style: none;
-    }
-
-    .nav-links a {
-      color: var(--text-muted);
-      font-weight: 600;
-      font-size: .9rem;
-      transition: var(--transition);
-    }
-
-    .nav-links a:hover {
-      color: var(--primary-dark);
-    }
-
-    .hamburger {
-      display: none;
-      flex-direction: column;
-      gap: 5px;
-      cursor: pointer;
-      padding: 6px;
-    }
-
-    .hamburger span {
-      display: block;
-      width: 24px;
-      height: 2.5px;
-      background: var(--accent);
-      border-radius: 4px;
-    }
-
-    /* HERO */
-    .hero {
-      min-height: 100vh;
-      display: flex;
-      align-items: center;
-      padding-top: 80px;
-      position: relative;
-      overflow: hidden;
-    }
-
+    /* Hero gradient bg */
     .hero-bg {
-      position: absolute;
-      inset: 0;
-      background: radial-gradient(ellipse 60% 70% at 80% 50%, rgba(245, 158, 11, .12) 0%, transparent 65%), radial-gradient(ellipse 40% 50% at 10% 80%, rgba(120, 53, 15, .06) 0%, transparent 60%);
+      background:
+        radial-gradient(ellipse 80% 60% at 70% 30%, rgba(245, 158, 11, 0.18) 0%, transparent 60%),
+        radial-gradient(ellipse 50% 50% at 10% 80%, rgba(217, 119, 6, 0.12) 0%, transparent 55%),
+        linear-gradient(160deg, #fffcf0 0%, #ffffff 50%, #fffbf0 100%);
     }
 
+    /* Bento blob bg */
+    .bento-bg {
+      background:
+        radial-gradient(ellipse 60% 50% at 20% 20%, rgba(245, 158, 11, 0.08) 0%, transparent 60%),
+        radial-gradient(ellipse 50% 60% at 80% 80%, rgba(217, 119, 6, 0.06) 0%, transparent 55%),
+        #fffbf0;
+    }
+
+    /* Floating blobs */
     .blob {
       position: absolute;
       border-radius: 50%;
-      filter: blur(60px);
-      opacity: .3;
-      animation: float 8s ease-in-out infinite;
+      filter: blur(70px);
+      pointer-events: none;
     }
 
-    .blob-1 {
-      width: 400px;
-      height: 400px;
-      background: var(--primary-light);
-      top: -80px;
-      right: -80px;
+    /* Hover shrink button */
+    .btn-shrink {
+      transition: transform 0.2s cubic-bezier(0.34, 1.56, 0.64, 1), box-shadow 0.2s ease;
     }
 
-    .blob-2 {
-      width: 300px;
-      height: 300px;
-      background: #fde68a;
-      bottom: 60px;
-      left: -60px;
-      animation-delay: 3s;
+    .btn-shrink:hover {
+      transform: scale(0.94);
     }
 
-    @keyframes float {
-
-      0%,
-      100% {
-        transform: translateY(0) scale(1)
-      }
-
-      50% {
-        transform: translateY(-20px) scale(1.04)
-      }
+    .btn-shrink:active {
+      transform: scale(0.88);
     }
 
-    .hero .container {
-      display: grid;
-      grid-template-columns: 1fr 1fr;
-      gap: 64px;
-      align-items: center;
-      position: relative;
+    /* Bento card hover */
+    .bento-card {
+      transition: transform 0.3s cubic-bezier(0.34, 1.56, 0.64, 1), box-shadow 0.3s ease;
     }
 
-    .hero-badge {
-      display: inline-flex;
-      align-items: center;
-      gap: 8px;
-      background: var(--primary-light);
-      border: 1px solid rgba(245, 158, 11, .3);
-      border-radius: var(--radius-full);
-      padding: 8px 16px;
-      font-size: .82rem;
-      font-weight: 600;
-      color: var(--primary-dark);
-      margin-bottom: 20px;
+    .bento-card:hover {
+      transform: translateY(-6px);
+      box-shadow: 0 24px 64px rgba(245, 158, 11, 0.2);
     }
 
-    .hero-badge .dot {
-      width: 8px;
-      height: 8px;
-      background: var(--primary);
-      border-radius: 50%;
-      animation: pulse 1.5s ease-in-out infinite;
+    /* Gradient text */
+    .text-gradient {
+      background: linear-gradient(135deg, #b45309 0%, #d97706 50%, #f59e0b 100%);
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+      background-clip: text;
     }
 
-    @keyframes pulse {
-
-      0%,
-      100% {
-        opacity: 1;
-        transform: scale(1)
-      }
-
-      50% {
-        opacity: .5;
-        transform: scale(1.3)
-      }
-    }
-
-    .hero-title {
-      font-family: 'Playfair Display', serif;
-      font-size: clamp(2.2rem, 5vw, 3.8rem);
-      font-weight: 800;
-      color: var(--accent);
-      line-height: 1.15;
-      margin-bottom: 20px;
-    }
-
-    .hero-title span {
-      color: var(--primary-dark);
-      position: relative;
-    }
-
-    .hero-title span::after {
-      content: '';
-      position: absolute;
-      bottom: 4px;
-      left: 0;
-      right: 0;
-      height: 4px;
-      background: linear-gradient(90deg, var(--primary), transparent);
-      border-radius: 4px;
-    }
-
-    .hero-desc {
-      color: var(--text-muted);
-      font-size: 1.1rem;
-      margin-bottom: 32px;
-      max-width: 440px;
-      line-height: 1.7;
-    }
-
-    .hero-actions {
-      display: flex;
-      gap: 16px;
-      flex-wrap: wrap;
-    }
-
-    .hero-stats {
-      display: flex;
-      gap: 32px;
-      margin-top: 48px;
-      padding-top: 32px;
-      border-top: 1px solid var(--border);
-    }
-
-    .stat-item {
-      text-align: center;
-    }
-
-    .stat-num {
-      font-family: 'Playfair Display', serif;
-      font-size: 1.8rem;
-      font-weight: 800;
-      color: var(--accent);
-      display: block;
-    }
-
-    .stat-label {
-      font-size: .8rem;
-      color: var(--text-muted);
-      font-weight: 600;
-    }
-
-    .hero-visual {
-      position: relative;
-      display: flex;
-      align-items: center;
-      justify-content: center;
-    }
-
-    .hero-img-wrap {
-      width: 100%;
-      max-width: 440px;
-      aspect-ratio: 1;
-      border-radius: 32px;
+    /* Product image shimmer */
+    .product-img-wrap {
       overflow: hidden;
-      box-shadow: var(--shadow-lg);
+      border-radius: 16px;
     }
 
-    .hero-img-wrap img {
-      width: 100%;
-      height: 100%;
-      object-fit: cover;
-      transition: transform .6s ease;
+    .product-img-wrap img {
+      transition: transform 0.5s ease;
     }
 
-    .hero-img-wrap:hover img {
-      transform: scale(1.04);
+    .product-img-wrap:hover img {
+      transform: scale(1.08);
     }
 
-    .hero-card-float {
-      position: absolute;
-      background: var(--surface);
-      border-radius: var(--radius);
-      padding: 14px 18px;
-      box-shadow: var(--shadow-md);
-      display: flex;
-      align-items: center;
-      gap: 12px;
-      animation: cardFloat 4s ease-in-out infinite;
+    /* Nav scroll blur */
+    .nav-scrolled {
+      background: rgba(255, 251, 240, 0.92) !important;
+      backdrop-filter: blur(20px);
+      box-shadow: 0 2px 24px rgba(120, 53, 15, 0.08);
     }
 
-    .card-1 {
-      bottom: -20px;
-      left: -20px;
+    /* Stat counter shimmer */
+    .stat-card {
+      background: rgba(255, 255, 255, 0.85);
+      backdrop-filter: blur(12px);
+      border: 1px solid rgba(245, 158, 11, 0.2);
+      transition: transform 0.3s ease, box-shadow 0.3s ease;
     }
 
-    .card-2 {
-      top: 30px;
-      right: -20px;
-      animation-delay: 2s;
-    }
-
-    @keyframes cardFloat {
-
-      0%,
-      100% {
-        transform: translateY(0)
-      }
-
-      50% {
-        transform: translateY(-8px)
-      }
-    }
-
-    .card-icon {
-      font-size: 1.6rem;
-    }
-
-    .card-title {
-      font-weight: 700;
-      font-size: .85rem;
-      color: var(--text);
-    }
-
-    .card-sub {
-      font-size: .75rem;
-      color: var(--text-muted);
-    }
-
-    /* ABOUT */
-    .about {
-      background: var(--surface);
-    }
-
-    .about .container {
-      display: grid;
-      grid-template-columns: 1fr 1fr;
-      gap: 80px;
-      align-items: center;
-    }
-
-    .about-img-grid {
-      display: grid;
-      grid-template-columns: 1fr 1fr;
-      gap: 12px;
-    }
-
-    .img-box {
-      border-radius: var(--radius);
-      overflow: hidden;
-      box-shadow: var(--shadow-sm);
-    }
-
-    .img-box img {
-      width: 100%;
-      height: 180px;
-      object-fit: cover;
-      transition: transform .4s ease;
-    }
-
-    .img-box:hover img {
-      transform: scale(1.06);
-    }
-
-    .img-box.tall {
-      grid-row: 1/3;
-    }
-
-    .img-box.tall img {
-      height: 100%;
-    }
-
-    .about-list {
-      list-style: none;
-      margin-top: 24px;
-      display: flex;
-      flex-direction: column;
-      gap: 14px;
-    }
-
-    .about-list li {
-      display: flex;
-      align-items: flex-start;
-      gap: 12px;
-      font-size: .95rem;
-      color: var(--text-muted);
-    }
-
-    .icon-check {
-      flex-shrink: 0;
-      width: 24px;
-      height: 24px;
-      border-radius: 50%;
-      background: var(--primary-light);
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      font-size: .75rem;
-      color: var(--primary-dark);
-      margin-top: 1px;
-    }
-
-    /* PRODUCTS */
-    .products {
-      background: var(--bg);
-    }
-
-    .products .header,
-    .testimony .header {
-      text-align: center;
-      margin-bottom: 56px;
-    }
-
-    .products .header .section-desc {
-      margin: 0 auto;
-    }
-
-    .product-grid {
-      display: grid;
-      grid-template-columns: repeat(3, 1fr);
-      gap: 24px;
-    }
-
-    .product-card {
-      background: var(--surface);
-      border-radius: var(--radius);
-      overflow: hidden;
-      box-shadow: var(--shadow-sm);
-      transition: var(--transition);
-      position: relative;
-    }
-
-    .product-card:hover {
-      transform: translateY(-8px);
-      box-shadow: var(--shadow-lg);
-    }
-
-    .product-img {
-      width: 100%;
-      aspect-ratio: 4/3;
-      object-fit: cover;
-    }
-
-    .product-badge {
-      position: absolute;
-      top: 14px;
-      left: 14px;
-      color: #fff;
-      font-size: .72rem;
-      font-weight: 700;
-      padding: 5px 12px;
-      border-radius: var(--radius-full);
-      letter-spacing: .05em;
-    }
-
-    .product-body {
-      padding: 20px;
-    }
-
-    .product-name {
-      font-family: 'Playfair Display', serif;
-      font-size: 1.15rem;
-      font-weight: 700;
-      color: var(--accent);
-      margin-bottom: 6px;
-    }
-
-    .product-desc {
-      font-size: .88rem;
-      color: var(--text-muted);
-      margin-bottom: 16px;
-      line-height: 1.6;
-    }
-
-    .product-footer {
-      display: flex;
-      align-items: center;
-      justify-content: space-between;
-    }
-
-    .product-price {
-      font-weight: 800;
-      font-size: 1.1rem;
-      color: var(--primary-dark);
-    }
-
-    .product-price .per {
-      font-size: .75rem;
-      font-weight: 500;
-      color: var(--text-muted);
-    }
-
-    .btn-order {
-      background: var(--primary-light);
-      color: var(--primary-dark);
-      font-weight: 700;
-      font-size: .82rem;
-      padding: 8px 16px;
-      border-radius: var(--radius-full);
-      border: none;
-      cursor: pointer;
-      transition: var(--transition);
-    }
-
-    .btn-order:hover {
-      background: var(--primary);
-      color: #fff;
-    }
-
-    /* TESTIMONY */
-    .testimony {
-      background: linear-gradient(135deg, var(--accent) 0%, #7c2d12 100%);
-      color: #fff;
-    }
-
-    .testimony .section-title {
-      color: #fff;
-    }
-
-    .testimony .section-desc {
-      color: rgba(255, 255, 255, .7);
-      margin: 0 auto;
-    }
-
-    .testimony .section-label {
-      background: rgba(255, 255, 255, .15);
-      color: #fde68a;
-    }
-
-    .testi-grid {
-      display: grid;
-      grid-template-columns: repeat(3, 1fr);
-      gap: 24px;
-    }
-
-    .testi-card {
-      background: rgba(255, 255, 255, .08);
-      backdrop-filter: blur(10px);
-      border: 1px solid rgba(255, 255, 255, .12);
-      border-radius: var(--radius);
-      padding: 28px;
-      transition: var(--transition);
-    }
-
-    .testi-card:hover {
-      background: rgba(255, 255, 255, .14);
+    .stat-card:hover {
       transform: translateY(-4px);
+      box-shadow: 0 16px 40px rgba(245, 158, 11, 0.18);
     }
 
-    .stars {
-      color: var(--primary);
-      font-size: 1rem;
-      margin-bottom: 14px;
-      letter-spacing: 2px;
+    /* Scrollbar */
+    ::-webkit-scrollbar {
+      width: 6px;
+      height: 6px;
     }
 
-    .testi-text {
-      font-size: .95rem;
-      line-height: 1.7;
-      color: rgba(255, 255, 255, .88);
-      margin-bottom: 20px;
+    ::-webkit-scrollbar-track {
+      background: #fffbf0;
     }
 
-    .testi-author {
-      display: flex;
-      align-items: center;
-      gap: 12px;
+    ::-webkit-scrollbar-thumb {
+      background: #fcd34d;
+      border-radius: 6px;
     }
 
-    .testi-avatar {
-      width: 44px;
-      height: 44px;
-      border-radius: 50%;
-      background: linear-gradient(135deg, var(--primary), var(--primary-dark));
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      font-weight: 700;
-      font-size: 1rem;
-      color: #fff;
-      flex-shrink: 0;
+    .scrollbar-none::-webkit-scrollbar {
+      display: none;
     }
 
-    .testi-name {
-      font-weight: 700;
-      font-size: .9rem;
-    }
-
-    .testi-role {
-      font-size: .78rem;
-      color: rgba(255, 255, 255, .55);
-    }
-
-    /* HOW TO ORDER */
-    .how-to {
-      background: var(--bg);
-    }
-
-    .how-to .container {
-      display: grid;
-      grid-template-columns: 1fr 1fr;
-      gap: 80px;
-      align-items: center;
-    }
-
-    .steps {
-      display: flex;
-      flex-direction: column;
-      gap: 28px;
-      margin-top: 32px;
-    }
-
-    .step {
-      display: flex;
-      gap: 20px;
-      align-items: flex-start;
-    }
-
-    .step-num {
-      flex-shrink: 0;
-      width: 48px;
-      height: 48px;
-      border-radius: 14px;
-      background: linear-gradient(135deg, var(--primary), var(--primary-dark));
-      color: #fff;
-      font-weight: 800;
-      font-size: 1.1rem;
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      box-shadow: 0 4px 14px rgba(245, 158, 11, .3);
-    }
-
-    .step-title {
-      font-weight: 700;
-      font-size: 1rem;
-      color: var(--accent);
-      margin-bottom: 4px;
-    }
-
-    .step-content p {
-      font-size: .9rem;
-      color: var(--text-muted);
-      line-height: 1.6;
-    }
-
-    .how-to-cta {
-      background: linear-gradient(135deg, var(--primary-light), #fef9ee);
-      border: 1px solid rgba(245, 158, 11, .2);
-      border-radius: var(--radius);
-      padding: 40px;
-      text-align: center;
-    }
-
-    .cta-icon {
-      font-size: 3.5rem;
-      margin-bottom: 16px;
-    }
-
-    .how-to-cta h3 {
-      font-family: 'Playfair Display', serif;
-      font-size: 1.5rem;
-      color: var(--accent);
-      margin-bottom: 10px;
-    }
-
-    .how-to-cta p {
-      color: var(--text-muted);
-      font-size: .93rem;
-      margin-bottom: 24px;
-    }
-
-    .wa-number {
-      font-size: 1.2rem;
-      font-weight: 700;
-      color: var(--accent);
-      margin-bottom: 20px;
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      gap: 8px;
-    }
-
-    /* FOOTER */
-    footer {
-      background: var(--accent);
-      color: rgba(255, 255, 255, .8);
-      padding: 48px 0 28px;
-    }
-
-    .footer-top {
-      display: grid;
-      grid-template-columns: 1.5fr 1fr 1fr;
-      gap: 48px;
-      margin-bottom: 40px;
-    }
-
-    .footer-brand-name {
-      font-family: 'Playfair Display', serif;
-      color: #fde68a;
-      font-size: 1.3rem;
-      margin-bottom: 12px;
-      display: block;
-    }
-
-    .footer-desc {
-      font-size: .88rem;
-      line-height: 1.7;
-      color: rgba(255, 255, 255, .6);
-      max-width: 280px;
-    }
-
-    .footer-col h4 {
-      color: #fff;
-      font-size: .9rem;
-      font-weight: 700;
-      margin-bottom: 16px;
-    }
-
-    .footer-col ul {
-      list-style: none;
-      display: flex;
-      flex-direction: column;
-      gap: 10px;
-    }
-
-    .footer-col ul li {
-      font-size: .85rem;
-      color: rgba(255, 255, 255, .6);
-    }
-
-    .footer-bottom {
-      border-top: 1px solid rgba(255, 255, 255, .1);
-      padding-top: 24px;
-      display: flex;
-      align-items: center;
-      justify-content: space-between;
-      font-size: .82rem;
-      color: rgba(255, 255, 255, .4);
-    }
-
-    .footer-bottom span {
-      color: var(--primary);
-      font-weight: 600;
-    }
-
-    /* ANIMATIONS */
-    .reveal {
-      opacity: 0;
-      transform: translateY(30px);
-      transition: opacity .6s ease, transform .6s ease;
-    }
-
-    .reveal.visible {
-      opacity: 1;
-      transform: translateY(0);
-    }
-
-    /* RESPONSIVE */
-    @media (max-width: 900px) {
-
-      .hero .container,
-      .about .container,
-      .how-to .container {
-        grid-template-columns: 1fr;
-        gap: 40px;
-      }
-
-      .hero-visual {
-        order: -1;
-      }
-
-      .hero-img-wrap {
-        max-width: 320px;
-        margin: 0 auto;
-      }
-
-      .product-grid {
-        grid-template-columns: 1fr 1fr;
-      }
-
-      .testi-grid {
-        grid-template-columns: 1fr;
-        max-width: 400px;
-        margin: 0 auto;
-      }
-
-      .footer-top {
-        grid-template-columns: 1fr 1fr;
-      }
-
-      .nav-links {
-        display: none;
-      }
-
-      .hamburger {
-        display: flex;
-      }
-    }
-
-    @media (max-width: 600px) {
-      .product-grid {
-        grid-template-columns: 1fr;
-        max-width: 360px;
-        margin: 0 auto;
-      }
-
-      .hero-stats {
-        gap: 20px;
-      }
-
-      .footer-top {
-        grid-template-columns: 1fr;
-      }
-
-      .footer-bottom {
-        flex-direction: column;
-        gap: 8px;
-        text-align: center;
-      }
+    .scrollbar-none {
+      -ms-overflow-style: none;
+      scrollbar-width: none;
     }
   </style>
 </head>
 
-<body>
+<body class="bg-white text-slate-800 overflow-x-hidden">
 
-  <!-- NAVBAR -->
-  <nav class="navbar" id="navbar">
-    <div class="container">
-      <a href="#" class="nav-brand">
-        <div class="nav-logo" id="nav-logo-emoji"></div>
-        <span class="nav-name" id="nav-brand-name"></span>
+  <!-- ═══════════ NAVBAR ═══════════ -->
+  <nav id="navbar" class="fixed top-0 left-0 right-0 z-50 transition-all duration-300 py-4 md:py-5 bg-transparent">
+    <div class="max-w-6xl mx-auto px-6 flex items-center justify-between">
+      <!-- Brand -->
+      <a href="#" class="flex items-center group">
+        <img src="logo.png" alt="Keripik Pak Sabar"
+          class="h-12 md:h-16 w-auto object-contain group-hover:scale-105 transition-transform drop-shadow-sm" />
       </a>
-      <ul class="nav-links">
-        <li><a href="#tentang">Tentang Kami</a></li>
-        <li><a href="#produk">Produk</a></li>
-        <li><a href="#pesan">Cara Pesan</a></li>
+
+      <!-- Desktop Links -->
+      <ul class="hidden md:flex items-center gap-8 list-none">
+        <li><a href="#produk"
+            class="text-slate-600 hover:text-amber-700 font-semibold text-base transition-colors">Produk</a></li>
+        <li><a href="#info"
+            class="text-slate-600 hover:text-amber-700 font-semibold text-base transition-colors">Info</a>
+        </li>
+        <li><a href="#pesan"
+            class="text-slate-600 hover:text-amber-700 font-semibold text-base transition-colors">Pesan</a>
+        </li>
       </ul>
-      <div style="display:flex;gap:12px;align-items:center;">
-        <a id="btn-nav-wa" href="#" target="_blank" class="btn btn-wa">💬 Pesan Sekarang</a>
-        <div class="hamburger" id="hamburger"><span></span><span></span><span></span></div>
-      </div>
+
+      <!-- CTA -->
+      <a id="nav-tel" href="#"
+        class="btn-shrink hidden md:inline-flex items-center gap-2 bg-amber-600 hover:bg-amber-700 text-white px-5 py-2.5 rounded-full text-sm font-bold shadow-lg shadow-amber-200">
+        Hubungi Kami
+      </a>
     </div>
   </nav>
 
-  <!-- HERO -->
-  <section class="hero" id="beranda">
-    <div class="hero-bg"></div>
-    <div class="blob blob-1"></div>
-    <div class="blob blob-2"></div>
-    <div class="container">
-      <div class="hero-content">
-        <div class="hero-badge">
-          <span class="dot"></span>
-          <span id="hero-badge-text"></span>
+  <!-- ═══════════ HERO ═══════════ -->
+  <section class="hero-bg relative min-h-screen flex items-center pt-24 md:pt-28 overflow-hidden" id="beranda">
+
+    <!-- Floating blobs -->
+    <div class="blob w-96 h-96 bg-amber-200 opacity-50 top-10 right-0 animate-float" style="animation-duration:8s;">
+    </div>
+    <div class="blob w-64 h-64 bg-yellow-200 opacity-40 bottom-20 left-10 animate-float"
+      style="animation-duration:10s;animation-delay:3s;"></div>
+    <div class="blob w-48 h-48 bg-amber-100 opacity-60 top-40 left-1/3 animate-float"
+      style="animation-duration:7s;animation-delay:1.5s;"></div>
+
+    <div class="max-w-6xl mx-auto px-6 grid md:grid-cols-2 gap-12 items-center w-full relative z-10 py-16">
+
+      <!-- Left content -->
+      <div>
+        <!-- Headline -->
+        <h1 id="hero-title" class="font-display text-5xl md:text-6xl font-black leading-tight text-slate-900 mb-6"></h1>
+
+        <!-- Desc -->
+        <p id="hero-desc" class="text-slate-500 text-lg leading-relaxed mb-8 max-w-md"></p>
+
+        <!-- Actions -->
+        <div class="flex flex-wrap gap-4">
+          <a href="#pesan" id="btn-hero-pesan"
+            class="btn-shrink inline-flex items-center gap-2 bg-gradient-to-r from-blue-600 to-blue-500 text-white px-8 py-4 rounded-2xl font-bold text-base shadow-xl shadow-blue-300/50">
+            Pesan Sekarang
+          </a>
+          <a href="#produk"
+            class="btn-shrink inline-flex items-center gap-2 glass text-blue-700 border border-blue-200 px-8 py-4 rounded-2xl font-bold text-base">
+            Lihat Produk
+          </a>
         </div>
-        <h1 class="hero-title" id="hero-title"></h1>
-        <p class="hero-desc" id="hero-desc"></p>
-        <div class="hero-actions">
-          <a href="#produk" class="btn btn-primary">🛒 Lihat Produk</a>
-          <a href="#tentang" class="btn btn-outline">Tentang Kami</a>
-        </div>
-        <div class="hero-stats" id="hero-stats"></div>
+
+        <!-- Stats row -->
+        <div class="flex flex-wrap gap-4 mt-10" id="hero-stats"></div>
       </div>
-      <div class="hero-visual">
-        <div class="hero-img-wrap">
-          <img id="hero-img" src="" alt="Foto Produk Utama" />
-        </div>
-        <div class="hero-card-float card-1">
-          <span class="card-icon">⭐</span>
-          <div>
-            <div class="card-title">Rating 4.9 / 5</div>
-            <div class="card-sub" id="hero-card-1-sub"></div>
+
+      <!-- Right: hero image -->
+      <div class="relative flex justify-center">
+        <div class="relative">
+          <!-- Main image -->
+          <div
+            class="w-80 h-80 md:w-96 md:h-96 rounded-3xl overflow-hidden shadow-2xl shadow-blue-200/60 border-4 border-white">
+            <img id="hero-img" src="" alt="Produk Keripik"
+              class="w-full h-full object-cover hover:scale-105 transition-transform duration-700" />
           </div>
-        </div>
-        <div class="hero-card-float card-2">
-          <span class="card-icon">🏡</span>
-          <div>
-            <div class="card-title">Buatan Rumahan</div>
-            <div class="card-sub">Tanpa bahan pengawet</div>
-          </div>
-        </div>
-      </div>
-    </div>
-  </section>
 
-  <!-- TENTANG KAMI -->
-  <section class="about section" id="tentang">
-    <div class="container">
-      <div class="about-img-grid reveal" id="about-img-grid"></div>
-      <div class="reveal">
-        <span class="section-label">Tentang Kami</span>
-        <h2 class="section-title">Usaha Keluarga<br />Penuh Dedikasi</h2>
-        <p class="section-desc" id="about-cerita"></p>
-        <ul class="about-list" id="about-list"></ul>
-      </div>
-    </div>
-  </section>
-
-  <!-- PRODUK -->
-  <section class="products section" id="produk">
-    <div class="container">
-      <div class="header reveal">
-        <span class="section-label">Produk Kami</span>
-        <h2 class="section-title">Pilihan Varian Lezat</h2>
-        <p class="section-desc">Semua produk dibuat segar dengan bahan lokal pilihan.</p>
-      </div>
-      <div class="product-grid" id="product-grid"></div>
-    </div>
-  </section>
-
-  <!-- CARA PESAN -->
-  <section class="how-to section" id="pesan">
-    <div class="container">
-      <div class="reveal">
-        <span class="section-label">Cara Pesan</span>
-        <h2 class="section-title">Mudah & Cepat<br />Pesan via WhatsApp</h2>
-        <p class="section-desc">Tidak perlu ribet. Pesan langsung via WhatsApp.</p>
-        <div class="steps">
-          <div class="step">
-            <div class="step-num">1</div>
-            <div class="step-content">
-              <div class="step-title">Pilih Produk</div>
-              <p>Pilih varian produk yang Anda inginkan dari daftar di atas.</p>
+          <!-- Floating card 1 -->
+          <div
+            class="absolute -bottom-5 -left-8 glass rounded-2xl px-4 py-3 shadow-xl flex items-center gap-3 animate-float">
+            <span class="text-2xl">⭐</span>
+            <div>
+              <div class="font-bold text-sm text-slate-800">Rating Tinggi</div>
+              <div class="text-xs text-slate-500">Pelanggan Setia</div>
             </div>
           </div>
-          <div class="step">
-            <div class="step-num">2</div>
-            <div class="step-content">
-              <div class="step-title">Hubungi via WhatsApp</div>
-              <p id="step-2-text"></p>
-            </div>
-          </div>
-          <div class="step">
-            <div class="step-num">3</div>
-            <div class="step-content">
-              <div class="step-title">Konfirmasi & Pembayaran</div>
-              <p>Konfirmasi pesanan dan lakukan pembayaran via transfer bank atau tunai (COD area setempat).</p>
-            </div>
-          </div>
-          <div class="step">
-            <div class="step-num">4</div>
-            <div class="step-content">
-              <div class="step-title">Produk Dikirim</div>
-              <p>Pesanan dikemas rapi dan dikirim via ekspedisi pilihan atau ambil langsung di lokasi.</p>
+
+          <!-- Floating card 2 -->
+          <div
+            class="absolute -top-4 -right-6 glass rounded-2xl px-4 py-3 shadow-xl flex items-center gap-3 animate-float"
+            style="animation-delay:2s;">
+            <span class="text-2xl">✅</span>
+            <div>
+              <div class="font-bold text-sm text-slate-800">Halal Certified</div>
+              <div class="text-xs text-slate-500">NIB Terdaftar</div>
             </div>
           </div>
         </div>
       </div>
-      <div class="how-to-cta reveal">
-        <div class="cta-icon">💬</div>
-        <h3>Siap Pesan Sekarang?</h3>
-        <p id="cta-desc"></p>
-        <div class="wa-number" id="cta-wa-number">📞 —</div>
-        <a id="btn-wa-main" href="#" target="_blank" class="btn btn-wa"
-          style="width:100%;justify-content:center;font-size:1rem;padding:16px;">
-          💬 Chat WhatsApp Sekarang
-        </a>
-        <p style="margin-top:16px;font-size:.8rem;color:var(--text-muted);" id="cta-alamat"></p>
-      </div>
+    </div>
+
+    <!-- Wave divider -->
+    <div class="absolute bottom-0 left-0 right-0">
+      <svg viewBox="0 0 1440 60" xmlns="http://www.w3.org/2000/svg" preserveAspectRatio="none"
+        class="w-full h-12 fill-slate-50">
+        <path d="M0,30 C360,60 1080,0 1440,30 L1440,60 L0,60 Z" />
+      </svg>
     </div>
   </section>
 
-  <!-- FOOTER -->
-  <footer>
-    <div class="container">
-      <div class="footer-top">
+
+  <!-- ═══════════ BENTO GRID — PRODUK ═══════════ -->
+  <section class="bento-bg py-24" id="produk">
+    <div class="max-w-6xl mx-auto px-6">
+
+      <!-- Header -->
+      <div class="flex flex-col md:flex-row md:items-end justify-between mb-8 gap-4">
         <div>
-          <span class="footer-brand-name" id="footer-brand"></span>
-          <p class="footer-desc" id="footer-desc"></p>
+          <span class="inline-block glass-blue text-blue-700 font-semibold text-xs px-4 py-2 rounded-full mb-3">Katalog
+            Produk</span>
+          <h2 class="font-display text-4xl md:text-5xl font-black text-slate-900">Varian <span
+              class="text-gradient">Rasa Lezat</span></h2>
+          <p class="text-slate-500 text-sm mt-2">Geser ke samping untuk melihat semua varian produk.</p>
         </div>
-        <div class="footer-col">
-          <h4>Menu</h4>
-          <ul>
-            <li><a href="#beranda">Beranda</a></li>
-            <li><a href="#tentang">Tentang Kami</a></li>
-            <li><a href="#produk">Produk</a></li>
-            <li><a href="#pesan">Cara Pesan</a></li>
+        <!-- Slide Controls -->
+        <div class="flex items-center gap-3">
+          <button id="slide-prev" aria-label="Sebelumnya"
+            class="w-12 h-12 rounded-2xl glass flex items-center justify-center text-blue-700 font-bold hover:bg-blue-600 hover:text-white transition-all shadow-sm active:scale-95 cursor-pointer">
+            ←
+          </button>
+          <button id="slide-next" aria-label="Berikutnya"
+            class="w-12 h-12 rounded-2xl glass flex items-center justify-center text-blue-700 font-bold hover:bg-blue-600 hover:text-white transition-all shadow-sm active:scale-95 cursor-pointer">
+            →
+          </button>
+        </div>
+      </div>
+
+      <!-- Horizontal Slide Container -->
+      <div id="product-slider"
+        class="flex gap-6 overflow-x-auto snap-x snap-mandatory scroll-smooth pb-6 pt-2 px-1 scrollbar-none"></div>
+
+      <!-- Pricing row -->
+      <div class="mt-10 glass rounded-3xl p-6 md:p-8 shadow-xl border border-blue-100">
+        <h3 class="font-display text-2xl font-bold text-slate-800 mb-6 text-center">Daftar Harga</h3>
+        <div id="pricing-table" class="grid grid-cols-1 md:grid-cols-3 gap-4"></div>
+        <p class="text-center text-slate-400 text-xs mt-4">* Berlaku untuk semua varian rasa</p>
+      </div>
+    </div>
+  </section>
+
+  <!-- ═══════════ INFO PRODUK ═══════════ -->
+  <section class="bg-white py-24" id="info">
+    <div class="max-w-6xl mx-auto px-6">
+      <div class="grid md:grid-cols-2 gap-16 items-start">
+
+        <!-- Sertifikasi -->
+        <div>
+          <span class="inline-block glass-blue text-blue-700 font-semibold text-xs px-4 py-2 rounded-full mb-4">Keamanan
+            & Legalitas</span>
+          <h2 class="font-display text-4xl font-black text-slate-900 mb-3 leading-tight">Terjamin Halal &<br /><span
+              class="text-gradient">Legalitas Resmi</span></h2>
+          <p class="text-slate-500 mb-8 leading-relaxed">Produk kami telah melalui proses sertifikasi resmi untuk
+            menjamin keamanan dan kehalalan.</p>
+          <div id="certif-badges" class="flex flex-wrap gap-3 mb-8"></div>
+        </div>
+
+        <!-- Info cards -->
+        <div class="space-y-4">
+          <div class="bento-card glass rounded-2xl p-5 flex items-start gap-4 shadow-sm">
+            <div class="w-12 h-12 bg-blue-50 rounded-xl flex items-center justify-center text-2xl flex-shrink-0">🛡️
+            </div>
+            <div>
+              <div class="text-xs font-bold text-slate-400 uppercase tracking-wider mb-1">Masa Simpan</div>
+              <div id="info-masa-simpan" class="text-slate-800 font-medium text-sm"></div>
+            </div>
+          </div>
+          <div class="bento-card glass rounded-2xl p-5 flex items-start gap-4 shadow-sm">
+            <div class="w-12 h-12 bg-blue-50 rounded-xl flex items-center justify-center text-2xl flex-shrink-0">📦
+            </div>
+            <div>
+              <div class="text-xs font-bold text-slate-400 uppercase tracking-wider mb-1">Kemasan</div>
+              <div id="info-kemasan" class="text-slate-800 font-medium text-sm"></div>
+            </div>
+          </div>
+          <div class="bento-card glass rounded-2xl p-5 flex items-start gap-4 shadow-sm">
+            <div class="w-12 h-12 bg-blue-50 rounded-xl flex items-center justify-center text-2xl flex-shrink-0">🚌
+            </div>
+            <div>
+              <div class="text-xs font-bold text-slate-400 uppercase tracking-wider mb-1">Pengiriman</div>
+              <div id="info-pengiriman" class="text-slate-800 font-medium text-sm"></div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ═══════════ CARA PESAN ═══════════ -->
+  <section class="bento-bg py-24" id="pesan">
+    <div class="max-w-6xl mx-auto px-6">
+      <div class="text-center mb-14">
+        <span class="inline-block glass-blue text-blue-700 font-semibold text-xs px-4 py-2 rounded-full mb-4">Cara
+          Pesan</span>
+        <h2 class="font-display text-4xl font-black text-slate-900 mb-3">Mudah & Cepat<br /><span
+            class="text-gradient">Pesan via WhatsApp</span></h2>
+      </div>
+
+      <div class="grid md:grid-cols-2 gap-8 items-start">
+        <!-- Steps -->
+        <div class="space-y-5">
+          <div class="bento-card glass rounded-2xl p-6 shadow-sm flex gap-5 items-start">
+            <div
+              class="w-12 h-12 bg-gradient-to-br from-amber-500 to-amber-700 rounded-2xl flex items-center justify-center text-white font-black text-xl flex-shrink-0 shadow-lg shadow-amber-200">
+              1</div>
+            <div>
+              <div class="font-bold text-slate-800 mb-1">Telepon via WhatsApp</div>
+              <p class="text-slate-500 text-sm" id="step-2-text"></p>
+            </div>
+          </div>
+          <div class="bento-card glass rounded-2xl p-6 shadow-sm flex gap-5 items-start">
+            <div
+              class="w-12 h-12 bg-gradient-to-br from-blue-500 to-blue-700 rounded-2xl flex items-center justify-center text-white font-black text-xl flex-shrink-0 shadow-lg shadow-blue-200">
+              2</div>
+            <div>
+              <div class="font-bold text-slate-800 mb-1">Konfirmasi & Pembayaran</div>
+              <p class="text-slate-500 text-sm">Konfirmasi pesanan dan lakukan pembayaran via transfer bank atau tunai.
+              </p>
+            </div>
+          </div>
+          <div class="bento-card glass rounded-2xl p-6 shadow-sm flex gap-5 items-start">
+            <div
+              class="w-12 h-12 bg-gradient-to-br from-blue-500 to-blue-700 rounded-2xl flex items-center justify-center text-white font-black text-xl flex-shrink-0 shadow-lg shadow-blue-200">
+              3</div>
+            <div>
+              <div class="font-bold text-slate-800 mb-1">Produk Dikirim</div>
+              <p class="text-slate-500 text-sm">Pesanan dikemas rapi dalam kardus dan dikirim via bus antar kota.</p>
+            </div>
+          </div>
+        </div>
+
+        <!-- CTA box -->
+        <div class="glass-dark rounded-3xl p-8 text-center shadow-2xl">
+          <div class="text-5xl mb-4">📞</div>
+          <h3 class="font-display text-2xl font-black text-white mb-2">Siap Pesan Sekarang?</h3>
+          <p id="cta-desc" class="text-amber-200 text-sm mb-6"></p>
+          <div class="bg-white/10 rounded-2xl px-5 py-3 text-white font-bold text-xl mb-6" id="cta-number"></div>
+          <a id="btn-tel" href="#" target="_blank"
+            class="btn-shrink w-full inline-flex items-center justify-center gap-3 bg-white text-amber-900 font-bold text-base px-6 py-4 rounded-2xl shadow-xl mb-4">
+            📞 Telepon WhatsApp Sekarang
+          </a>
+          <p id="cta-alamat" class="text-amber-200 text-xs mt-2"></p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ═══════════ FOOTER ═══════════ -->
+  <footer class="bg-slate-900 text-white py-12">
+    <div class="max-w-6xl mx-auto px-6">
+      <div class="grid grid-cols-1 md:grid-cols-4 gap-10 mb-10">
+
+        <!-- Brand -->
+        <div class="md:col-span-2">
+          <div class="flex items-center mb-4">
+            <img src="logo.png" alt="Keripik Pak Sabar" class="h-14 md:h-16 w-auto object-contain" />
+          </div>
+          <p id="footer-desc" class="text-slate-400 text-sm leading-relaxed max-w-xs"></p>
+        </div>
+
+        <!-- Menu -->
+        <div>
+          <h4 class="font-bold text-sm text-white mb-4">Menu</h4>
+          <ul class="space-y-2 list-none">
+            <li><a href="#beranda" class="text-slate-400 hover:text-blue-400 text-sm transition-colors">Beranda</a></li>
+
+            <li><a href="#produk" class="text-slate-400 hover:text-blue-400 text-sm transition-colors">Produk</a></li>
+            <li><a href="#pesan" class="text-slate-400 hover:text-blue-400 text-sm transition-colors">Cara Pesan</a>
+            </li>
           </ul>
         </div>
-        <div class="footer-col">
-          <h4>Informasi</h4>
-          <ul id="footer-info"></ul>
+
+        <!-- Info -->
+        <div>
+          <h4 class="font-bold text-sm text-white mb-4">Informasi</h4>
+          <ul id="footer-info" class="space-y-2 list-none"></ul>
         </div>
       </div>
-      <div class="footer-bottom">
+
+      <!-- Bottom -->
+      <div
+        class="border-t border-slate-800 pt-6 flex flex-col md:flex-row justify-between items-center gap-2 text-xs text-slate-500">
         <p id="footer-copy"></p>
-        <p>Dibuat oleh <span>KKN Undip 2026</span></p>
+        <p>Dibuat oleh <span class="text-amber-400 font-semibold">KKN Undip 2026</span></p>
       </div>
     </div>
   </footer>
 
+
+  <!-- ═══════════ RENDER ENGINE ═══════════ -->
   <script>
-    // ═══════════════════════════════════════════════════
-    //  RENDER ENGINE — Jangan ubah bagian ini
-    //  Engine ini membaca UMKM_CONFIG dari config.js
-    //  dan mengisi seluruh halaman secara otomatis
-    // ═══════════════════════════════════════════════════
+    const UMKM_CONFIG = {
+      nama_usaha: "Keripik Pak Sabar",
+      tagline: "Keripik Pisang Asli Juwangi Renyah, Gurih, Harga Terjangkau",
+      deskripsi: "Keripik pisang & talas buatan tangan dari pisang Rojonongko & Kepok pilihan petani lokal Juwangi. Rasa konsisten, harga bersahabat, sudah bersertifikat Halal. Cocok untuk oleh-oleh dan cemilan sehari-hari.",
+      emoji_usaha: "🍌",
+      tahun_berdiri: "2015",
+      nama_pemilik: "Bu Par",
+      nomor_wa: "628882663125",
+      alamat: "Juwangi, Boyolali, Jawa Tengah",
+      foto_hero: "https://images.unsplash.com/photo-1621939514649-280e2ee25f60?w=700&q=80",
+      stats: [
+        { angka: "10+", label: "Tahun Berpengalaman" },
+        { angka: "9 Varian", label: "Pilihan Rasa" },
+        { angka: "2 Bulan", label: "Ketahanan Produk" },
+      ],
+      produk: [
+        {
+          nama: "Keripik Pisang Manis",
+          deskripsi: "Renyah manis dari pisang Rojonongko & Kepok pilihan. Komposisi: ceriping pisang 2 kg, gula pasir 2 ons, garam secukupnya.",
+          harga: "Rp 12.500",
+          satuan: "250 gr",
+          foto: "https://images.unsplash.com/photo-1621939514649-280e2ee25f60?w=500&q=80",
+          badge: "🔥 Terlaris",
+          badge_warna: "linear-gradient(135deg,#f59e0b,#d97706)",
+        },
+        {
+          nama: "Keripik Pisang Coklat",
+          deskripsi: "Perpaduan manis pisang dan coklat premium. Komposisi: ceriping pisang, gula pasir, gula Jawa 250 gr, coklat bubuk, coklat batang 2 bar.",
+          harga: "Rp 12.500",
+          satuan: "250 gr",
+          foto: "https://images.unsplash.com/photo-1481391319762-47dff72954d9?w=500&q=80",
+          badge: "🍫 Spesial",
+          badge_warna: "linear-gradient(135deg,#92400e,#78350f)",
+        },
+        {
+          nama: "Keripik Pisang Mustofa",
+          deskripsi: "Pedas gurih dengan bumbu rempah khas. Komposisi: ceriping pisang, cabai, bawang putih, bawang merah, garam, Masako, daun jeruk, kacang tanah.",
+          harga: "Rp 12.500",
+          satuan: "250 gr",
+          foto: "https://images.unsplash.com/photo-1551024709-8f23befc6f87?w=500&q=80",
+          badge: "🌶 Pedas Rempah",
+          badge_warna: "linear-gradient(135deg,#ef4444,#dc2626)",
+        },
+        {
+          nama: "Keripik Pisang Gurih",
+          deskripsi: "Gurih klasik dengan bumbu bawang pilihan. Komposisi: ceriping pisang, bawang, garam, Masako.",
+          harga: "Rp 12.500",
+          satuan: "250 gr",
+          foto: "https://images.unsplash.com/photo-1604542031658-5799ca5d7936?w=500&q=80",
+          badge: "✨ Favorit",
+          badge_warna: "linear-gradient(135deg,#8b5cf6,#7c3aed)",
+        },
+        {
+          nama: "Keripik Pisang Pedas",
+          deskripsi: "Keripik pisang dengan cita rasa pedas menggigit yang bikin ketagihan.",
+          harga: "Rp 12.500",
+          satuan: "250 gr",
+          foto: "https://images.unsplash.com/photo-1603833665858-e61d17a86224?w=500&q=80",
+          badge: "🔥 Pedas",
+          badge_warna: "linear-gradient(135deg,#f97316,#ea580c)",
+        },
+        {
+          nama: "Keripik Talas",
+          deskripsi: "Keripik talas renyah tersedia 3 varian: Manis, Gurih, dan Pedas. Variasi cemilan yang lezat.",
+          harga: "Rp 12.500",
+          satuan: "250 gr",
+          foto: "https://images.unsplash.com/photo-1568702846914-96b305d2aaeb?w=500&q=80",
+          badge: "🌿 Talas",
+          badge_warna: "linear-gradient(135deg,#16a34a,#15803d)",
+        },
+        {
+          nama: "Keripik Singkong",
+          deskripsi: "Keripik singkong renyah tersedia 2 varian: Gurih dan Pedas. Cemilan tradisional yang selalu disukai.",
+          harga: "Rp 12.500",
+          satuan: "250 gr",
+          foto: "https://images.unsplash.com/photo-1481391319762-47dff72954d9?w=500&q=80",
+          badge: "🥔 Singkong",
+          badge_warna: "linear-gradient(135deg,#d97706,#b45309)",
+        },
+      ],
+      ukuran_harga: [
+        { berat: "250 gr", harga: "Rp 12.500" },
+        { berat: "500 gr", harga: "Rp 25.000" },
+        { berat: "1000 gr", harga: "Rp 50.000" },
+      ],
+      masa_simpan: "± 2 bulan (setelah dibuka, jauhkan dari sinar matahari langsung)",
+      kemasan: "Plastik",
+      pengiriman: "Via bus antar kota, dikemas dalam kardus",
+      sertifikasi: ["Halal MUI", "NIB: 1105240041103"],
+      lokasi_jual: ["Ngablak", "Pucang Gading", "Mranggen", "Penggaron"],
+      nama_kota: "Juwangi",
+      tahun_website: "2026",
+    };
 
     const C = UMKM_CONFIG;
-
-    // Apply custom colors
-    document.documentElement.style.setProperty('--primary', C.warna.primary);
-    document.documentElement.style.setProperty('--primary-dark', C.warna.primary_dark);
-    document.documentElement.style.setProperty('--accent', C.warna.accent);
-
-    // Meta tags
-    document.title = C.meta_title;
-    document.querySelector('meta[name="description"]').content = C.meta_description;
-
-    // WhatsApp link helper
-    const waLink = (msg) =>
-      `https://wa.me/${C.nomor_wa}?text=${encodeURIComponent(msg)}`;
-    const waDefault = waLink(`Halo ${C.nama_pemilik}, saya ingin bertanya tentang produk Anda.`);
+    const waLink = `https://wa.me/${C.nomor_wa}?text=${encodeURIComponent('Halo Bu Par, saya ingin pesan Keripik Pak Sabar. Apakah bisa saya telepon untuk memesan?')}`;
+    const fmtPhone = C.nomor_wa.replace('62', '0').replace(/(\d{4})(\d{4})(\d+)/, '$1-$2-$3');
 
     // ── NAVBAR ──
-    document.getElementById('nav-logo-emoji').textContent = C.emoji_usaha;
-    document.getElementById('nav-brand-name').textContent = C.nama_usaha;
-    document.getElementById('btn-nav-wa').href = waDefault;
+    document.getElementById('nav-tel').href = waLink;
+    document.getElementById('nav-tel').target = '_blank';
 
     // ── HERO ──
-    document.getElementById('hero-badge-text').textContent =
-      `Asli Desa ${C.nama_kota} · Sejak ${C.tahun_berdiri}`;
+
     document.getElementById('hero-title').innerHTML =
-      `${C.nama_usaha}<br /><span>${C.tagline}</span>`;
+      `<span class="text-gradient">${C.nama_usaha}</span><br/><span class="text-3xl md:text-4xl font-bold text-slate-600">${C.tagline}</span>`;
     document.getElementById('hero-desc').textContent = C.deskripsi;
     document.getElementById('hero-img').src = C.foto_hero;
-    document.getElementById('hero-img').alt = `Foto Produk ${C.nama_usaha}`;
-    document.getElementById('hero-card-1-sub').textContent =
-      `${C.stats[2]?.angka || ''} ulasan pembeli`;
+    document.getElementById('btn-hero-pesan').href = waLink;
+    document.getElementById('btn-hero-pesan').target = '_blank';
 
     // Hero stats
-    document.getElementById('hero-stats').innerHTML = C.stats
-      .map(s => `<div class="stat-item">
-        <span class="stat-num">${s.angka}</span>
-        <span class="stat-label">${s.label}</span>
+    document.getElementById('hero-stats').innerHTML = C.stats.map(s => `
+      <div class="stat-card rounded-2xl px-5 py-3 text-center">
+        <div class="font-display text-2xl font-black text-blue-700">${s.angka}</div>
+        <div class="text-xs text-slate-400 font-medium">${s.label}</div>
       </div>`).join('');
 
-    // ── TENTANG ──
-    document.getElementById('about-cerita').textContent = C.cerita_usaha;
-    document.getElementById('about-list').innerHTML = C.keunggulan
-      .map(k => `<li><span class="icon-check">✓</span><span>${k}</span></li>`).join('');
-    document.getElementById('about-img-grid').innerHTML = C.foto_tentang
-      .map(f => `<div class="img-box${f.tall ? ' tall' : ''}">
-        <img src="${f.url}" alt="${f.alt}" loading="lazy" />
-      </div>`).join('');
 
-    // ── PRODUK ──
-    document.getElementById('product-grid').innerHTML = C.produk.map((p, i) => `
-      <div class="product-card reveal">
-        <span class="product-badge" style="background:${p.badge_warna}">${p.badge}</span>
-        <img class="product-img" src="${p.foto}" alt="${p.nama}" loading="lazy" />
-        <div class="product-body">
-          <h3 class="product-name">${p.nama}</h3>
-          <p class="product-desc">${p.deskripsi}</p>
-          <div class="product-footer">
-            <div class="product-price">${p.harga} <span class="per">/ ${p.satuan}</span></div>
-            <button class="btn-order" onclick="orderProduct('${p.nama}')">Pesan</button>
-          </div>
+    // ── SLIDER PRODUK ──
+    const productSlider = document.getElementById('product-slider');
+    productSlider.innerHTML = C.produk.map((p) => `
+      <div class="bento-card glass rounded-3xl overflow-hidden shadow-md border border-blue-50 w-72 md:w-80 flex-shrink-0 snap-start">
+        <div class="product-img-wrap aspect-video">
+          <img src="${p.foto}" alt="${p.nama}" class="w-full h-full object-cover" loading="lazy" />
+        </div>
+        <div class="p-5">
+          <h3 class="font-display font-bold text-slate-800 text-lg mb-1">${p.nama}</h3>
+          <p class="text-slate-500 text-xs leading-relaxed">${p.deskripsi}</p>
         </div>
       </div>`).join('');
 
+    // Slider navigation controls
+    document.getElementById('slide-prev').addEventListener('click', () => {
+      productSlider.scrollBy({ left: -320, behavior: 'smooth' });
+    });
+    document.getElementById('slide-next').addEventListener('click', () => {
+      productSlider.scrollBy({ left: 320, behavior: 'smooth' });
+    });
+
+    // ── PRICING ──
+    document.getElementById('pricing-table').innerHTML = C.ukuran_harga.map(u => `
+      <div class="bento-card text-center bg-white/80 rounded-2xl p-4 border border-blue-100 shadow-sm">
+        <div class="text-slate-400 text-xs font-semibold mb-2">${u.berat}</div>
+        <div class="text-blue-700 font-black font-display text-xl">${u.harga}</div>
+      </div>`).join('');
+
+    // ── INFO ──
+    document.getElementById('certif-badges').innerHTML = C.sertifikasi.map(s => `
+      <div class="flex items-center gap-2 glass-blue text-blue-700 font-bold text-sm px-4 py-3 rounded-2xl border border-blue-200">
+        <span class="text-lg">✅</span> ${s}
+      </div>`).join('');
+
+
+
+    document.getElementById('info-masa-simpan').textContent = C.masa_simpan;
+    document.getElementById('info-kemasan').textContent = C.kemasan;
+    document.getElementById('info-pengiriman').textContent = C.pengiriman;
+
     // ── CARA PESAN ──
     document.getElementById('step-2-text').textContent =
-      `Chat langsung ke nomor WhatsApp ${C.nama_pemilik} dengan menyebutkan produk dan jumlah pesanan.`;
+      `Telepon langsung via WhatsApp ke ${C.nama_pemilik} (${fmtPhone}) dan sebutkan varian serta jumlah pesanan Anda.`;
     document.getElementById('cta-desc').textContent =
-      `Chat ${C.nama_pemilik} langsung via WhatsApp. Respon cepat, ramah, dan siap melayani!`;
-    document.getElementById('cta-wa-number').innerHTML =
-      `📞 ${C.nomor_wa.replace('62', '0').replace(/(\d{4})(\d{4})(\d+)/, '$1-$2-$3')}`;
-    document.getElementById('btn-wa-main').href = waDefault;
-    document.getElementById('cta-alamat').textContent =
-      `🏪 Toko offline di ${C.alamat}`;
+      `Hubungi ${C.nama_pemilik} langsung via telepon WhatsApp. Respons cepat dan siap melayani!`;
+    document.getElementById('cta-number').textContent = `📞 ${fmtPhone}`;
+    document.getElementById('btn-tel').href = waLink;
+    document.getElementById('cta-alamat').textContent = `📍 ${C.alamat}`;
 
     // ── FOOTER ──
-    document.getElementById('footer-brand').textContent = `${C.emoji_usaha} ${C.nama_usaha}`;
     document.getElementById('footer-desc').textContent =
-      `Olahan pangan autentik khas Desa ${C.nama_kota}, dibuat dengan bahan-bahan alami pilihan.`;
+      `Olahan pangan autentik khas ${C.nama_kota}, dibuat dengan bahan-bahan alami pilihan petani lokal.`;
     document.getElementById('footer-info').innerHTML = `
-      <li>📍 ${C.alamat}</li>
-      <li>📞 ${C.nomor_wa.replace('62', '0').replace(/(\d{4})(\d{4})(\d+)/, '$1-$2-$3')}</li>
-      <li>🕐 ${C.jam_buka}</li>
-      <li>📦 Pengiriman seluruh Indonesia</li>`;
+      <li class="text-slate-400 text-sm">📍 ${C.alamat}</li>
+      <li class="text-slate-400 text-sm">📞 ${fmtPhone} (WhatsApp Call)</li>
+      <li class="text-slate-400 text-sm">✅ ${C.sertifikasi.join(' · ')}</li>`;
     document.getElementById('footer-copy').textContent =
-      `© ${C.tahun_website} ${C.nama_usaha} · Desa ${C.nama_kota}`;
+      `© ${C.tahun_website} ${C.nama_usaha} · ${C.nama_kota}`;
 
-    // ── FUNGSI PESAN PRODUK ──
+    // ── ORDER FUNC ──
     function orderProduct(nama) {
-      const msg = `Halo ${C.nama_pemilik}, saya ingin pesan *${nama}*. Apakah masih tersedia?`;
-      window.open(waLink(msg), '_blank');
+      window.location.href = telLink;
     }
 
     // ── NAVBAR SCROLL ──
     window.addEventListener('scroll', () => {
-      document.getElementById('navbar').classList.toggle('scrolled', scrollY > 50);
+      document.getElementById('navbar').classList.toggle('nav-scrolled', scrollY > 60);
     });
 
     // ── REVEAL ON SCROLL ──
-    const observer = new IntersectionObserver((entries) => {
-      entries.forEach((e, i) => {
-        if (e.isIntersecting) setTimeout(() => e.target.classList.add('visible'), i * 80);
+    const observer = new IntersectionObserver(entries => {
+      entries.forEach(e => {
+        if (e.isIntersecting) {
+          e.target.style.opacity = '1';
+          e.target.style.transform = 'translateY(0)';
+        }
       });
-    }, { threshold: 0.12 });
-    document.querySelectorAll('.reveal').forEach(el => observer.observe(el));
+    }, { threshold: 0.1 });
 
-    // Re-observe after dynamic render
-    setTimeout(() => {
-      document.querySelectorAll('.reveal').forEach(el => observer.observe(el));
-    }, 100);
+    document.querySelectorAll('section > div').forEach(el => {
+      el.style.opacity = '0';
+      el.style.transform = 'translateY(24px)';
+      el.style.transition = 'opacity 0.6s ease, transform 0.6s ease';
+      observer.observe(el);
+    });
+
+    // ── SMOOTH SCROLL WITH SECTION ANIMATION ──
+    document.querySelectorAll('a[href^="#"]').forEach(anchor => {
+      anchor.addEventListener('click', function (e) {
+        const targetId = this.getAttribute('href');
+        if (!targetId || targetId === '#') return;
+        const targetElement = document.querySelector(targetId);
+        if (targetElement) {
+          e.preventDefault();
+          const navbar = document.getElementById('navbar');
+          const navbarHeight = (navbar ? navbar.offsetHeight : 90) + 10;
+          const targetPosition = targetElement.getBoundingClientRect().top + window.pageYOffset - navbarHeight;
+
+          window.scrollTo({
+            top: targetPosition,
+            behavior: 'smooth'
+          });
+
+          // Trigger smooth pop/pulse animation on the section container
+          const sectionContent = targetElement.querySelector('.max-w-6xl') || targetElement;
+          sectionContent.classList.remove('section-animate-pulse');
+          void sectionContent.offsetWidth; // Force reflow
+          setTimeout(() => {
+            sectionContent.classList.add('section-animate-pulse');
+          }, 200);
+        }
+      });
+    });
   </script>
 
 </body>
